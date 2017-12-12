@@ -2,10 +2,10 @@
  * Created by Warrior! on 2016/10/18.
  */
 
-import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class ReactUploadFile extends Component {
+export default class ReactUploadFile extends React.PureComponent {
   static propTypes = {
     options: PropTypes.shape({
       /* basics*/
@@ -81,10 +81,6 @@ export default class ReactUploadFile extends Component {
     xhrList: [],
     currentXHRId: 0,
   };
-
-  componentDidMount = () => {
-    this.input = ReactDOM.findDOMNode(this).querySelector('[name=ajax-upload-file-input]');
-  }
 
   /* trigger input's click*/
   /* trigger beforeChoose*/
@@ -272,7 +268,7 @@ export default class ReactUploadFile extends Component {
     };
     const chooseFileButton = React.cloneElement(this.props.chooseFileButton, {
       onClick: this.commonChooseFile
-    }, [...(this.props.chooseFileButton.props.children ? [this.props.chooseFileButton.props.children] : []), (<input type="file" name="ajax-upload-file-input" style={{ display: 'none' }} onChange={this.commonChangeFile} {...inputProps} key="file-button" />)]);
+    }, [...(this.props.chooseFileButton.props.children ? [this.props.chooseFileButton.props.children] : []), (<input type="file" ref={(r) => this.input = r} name="ajax-upload-file-input" style={{ display: 'none' }} onChange={this.commonChangeFile} {...inputProps} key="file-button" />)]);
     const uploadFileButton = this.props.uploadFileButton && React.cloneElement(this.props.uploadFileButton, {
       onClick: this.commonUploadFile
     });
